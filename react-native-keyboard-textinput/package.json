@@ -1,0 +1,32 @@
+{
+  "name": "react-native-keyboard-textinput",
+  "version": "1.0.0",
+  "description": "A react native package to provide a versatile and easy to implement solution to the overcomplicated problem of how to handle keyboards on different screens throughout a mobile app.",
+  "main": "index.tsx",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/swithuns/react-native-keyboard-textinput.git"
+  },
+  "keywords": [
+    "react-native",
+    "keyboard",
+    "textinput",
+    "keyboard",
+    "avoid",
+    "accessibility"
+  ],
+  "author": "Timothy Frankland",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "18.2.0",
+    "react-native": "^0.73.4",
+    "zustand": "^4.5.1"
+  },
+  "bugs": {
+    "url": "https://github.com/swithuns/react-native-keyboard-textinput/issues"
+  },
+  "homepage": "https://github.com/swithuns/react-native-keyboard-textinput#readme"
+}
