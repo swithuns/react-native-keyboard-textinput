@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Pressable, StyleSheet, View, Text } from "react-native";
 import { CustomKeyboardInputInterface } from "react-native-keyboard-textinput";
 import { TextInput } from "react-native";
@@ -21,6 +21,9 @@ const tags = ['React-Native', 'React', 'Keyboards', 'Cheese']
 const CustomKeyboard: React.FC<CustomKeyboardInputInterface> = ({ customOnChange, style, ...props}) => {
     const [searchTerms, setSearchTerms] = useState<SearchTermType>({searchTerm:'', tags:[]});
     const ref = useRef<TextInput>(null);
+    useEffect(()=>{
+        ref.current && ref.current.focus();
+    },[])
     const toggleTag = (tag: string) => {
         setSearchTerms((prevSearchTerms) => {
           const isTagPresent = prevSearchTerms.tags.includes(tag);
@@ -42,10 +45,10 @@ const CustomKeyboard: React.FC<CustomKeyboardInputInterface> = ({ customOnChange
       };
     return(
         <>
-        <TextInput returnKeyType={'search'} onSubmitEditing={()=> customOnChange && customOnChange(searchTerms)} ref={ref} {...props} style={styles.textInput} onChangeText={(text) => setSearchTerms({tags:searchTerms.tags,searchTerm:text})}/>
-        {tags.map(tag => {
+        <TextInput returnKeyType={'search'} ref={ref} onSubmitEditing={()=> customOnChange && customOnChange(searchTerms)} ref={ref} {...props} style={styles.textInput} onChangeText={(text) => setSearchTerms({tags:searchTerms.tags,searchTerm:text})}/>
+        {tags.map((tag, index) => {
             return(
-                <Tag onPress={toggleTag} label={tag} isTagged={searchTerms.tags.includes(tag)} />
+                <Tag key={'tag' + index} onPress={toggleTag} label={tag} isTagged={searchTerms.tags.includes(tag)} />
             )
         })}
         

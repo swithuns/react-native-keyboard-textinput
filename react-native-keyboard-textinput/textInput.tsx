@@ -5,23 +5,30 @@ import { StyleSheet, TextInput as NativeTextInput, View, TextInputProps, TextSty
 export interface KeyboardTextInput {
     keyboardId?: number,
     customOnChange?: (input:any) => void,
-    nonKeyboardStyle?: TextStyle
+    customData?: any
 }
 
 export interface CustomKeyboardInputInterface extends TextInputProps{
     customOnChange?: (input:any) => void,
+    customData?: any
 }
 
 export const TextInput: React.FC<TextInputProps & KeyboardTextInput> = ({
-    nonKeyboardStyle,
     keyboardId,
     ...props
   }) => {
     const [id] = useState(Math.random().toString(36).substring(7));
-    const { setId, setInputProps, setKeyboardId } = useTextInputStore();
+    const { setId, setInputProps, setKeyboardId, inputId } = useTextInputStore();
+
+    useEffect(()=>{
+        return()=>{
+            if(inputId === id){
+                setId('');
+            }
+        }
+    }, [])
   
     const setFocused = () => {
-      console.log(keyboardId);
       setInputProps(props)
       keyboardId? setKeyboardId(keyboardId): setKeyboardId(0)
       setId(id);
@@ -33,7 +40,7 @@ export const TextInput: React.FC<TextInputProps & KeyboardTextInput> = ({
             setFocused();
           }}
           {...props}
-          style={[styles.text, props.style, nonKeyboardStyle]}
+          style={[styles.text, props.style]}
         />
     );
   };

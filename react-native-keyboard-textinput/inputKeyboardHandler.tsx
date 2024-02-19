@@ -1,6 +1,6 @@
 import useTextInputStore from "./textInputStore";
 import React, { useState, useEffect, useRef, ReactNode } from "react";
-import { View, TextInput, Keyboard, StyleSheet, TextInputProps, TextStyle } from "react-native";
+import { View, TextInput, Keyboard, StyleSheet, TextInputProps, TextStyle, Platform, Pressable } from "react-native";
 import { CustomKeyboardInputInterface } from "./textInput";
 
 
@@ -37,6 +37,7 @@ const InputKeyboardHandler: React.FC<InputKeyboardHandlerInterface> = ({
   }, [inputId]);
 
   useEffect(() => {
+    if(Platform.OS === 'ios'){
     const keyboardDidShowListener = Keyboard.addListener(
       "keyboardDidShow",
       (event) => {
@@ -55,23 +56,25 @@ const InputKeyboardHandler: React.FC<InputKeyboardHandlerInterface> = ({
       keyboardDidShowListener.remove();
       keyboardDidHideListener.remove();
     };
+  }
   }, []);
   if (!inputId) return null;
-  console.log(keyboardId);
+
+
+  const adjustedInputProps : TextInputProps = {...inputProps, onBlur:(e) => {
+    setId("");
+    inputProps.onBlur && inputProps.onBlur(e)
+  },
+  value:text,
+  onChangeText:(text)=> {setText(text); inputProps.onChangeText && inputProps.onChangeText(text)}
+ }
   if(keyboardId && keyboardId > 0 && customTextBoxes?.length && customTextBoxes.length > keyboardId -1){
-    const adjustedInputProps : TextInputProps = {...inputProps, onBlur:(e) => {
-          setId("");
-          inputProps.onBlur && inputProps.onBlur(e)
-        },
-        value:text,
-        onChangeText:(text)=> {setText(text); inputProps.onChangeText && inputProps.onChangeText(text)}
-       }
+   
        const Box = customTextBoxes[keyboardId - 1];
-       console.log(Box);
         return(
-           <View  style={[styles.textInput, { bottom: keyboardHeight }]}>
-              <Box {...adjustedInputProps} />
-           </View>
+           <Pressable style={[styles.textInput, { bottom: keyboardHeight }]}>
+              <Box ref={textInputRef} {...adjustedInputProps} />
+           </Pressable>
         )
   }
  
@@ -79,7 +82,7 @@ const InputKeyboardHandler: React.FC<InputKeyboardHandlerInterface> = ({
     <TextInput
       {...inputProps} 
       ref={textInputRef}
-      style={[styles.textInput, style, { bottom: keyboardHeight, display:keyboardId?'none':undefined }]}
+      style={[styles.textInput, style, { bottom: keyboardHeight }]}
       onBlur={(e) => {
         setId("");
         inputProps.onBlur && inputProps.onBlur(e)

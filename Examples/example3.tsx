@@ -29,7 +29,6 @@ const ModifiedSearchInput = () => {
         style={styles.input}
         customOnChange={setResults}
         onChangeText={setInputValue}
-        numberOfLines={5}
       >
         <Text style={styles.input}>
             Search!
