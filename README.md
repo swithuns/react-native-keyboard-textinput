@@ -4,14 +4,9 @@ A react native package to provide a versatile and easy to implement solution to 
 
 The package is designed for true separation of concerns when it comes to your screens and keyboard interactions. It also allows much easier handling on accessability and user experience.
 
-<p align="center">
-  <img alt="React Native Text Input Interactive"
-        src="assets/examples/androidExample.webm" height='850' width="450" />
-</p>
+![App Demo](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcjE0cjZhZ2lzc3pwdGxlbW04cG5ibDYwaWx5c2hlYzRvYXFheDJzMCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/JE2zLcz00x0OhIGDSI/giphy.gif)
 
 # Installation
-
-Add the dependency:
 
 ```bash
 npm i @swithuns/react-native-keyboard-textinput
@@ -37,7 +32,7 @@ export default function App() {
 }
 ```
 
-## Basic Usage
+## Usage across app
 
 ```jsx
 import { TextInput } from "react-native-keyboard-textinput";
