@@ -73,7 +73,7 @@ const InputKeyboardHandler: React.FC<InputKeyboardHandlerInterface> = ({
        const Box = customTextBoxes[keyboardId - 1];
         return(
            <Pressable style={[styles.textInput, { bottom: keyboardHeight }]}>
-              <Box ref={textInputRef} {...adjustedInputProps} />
+              <Box {...adjustedInputProps} />
            </Pressable>
         )
   }

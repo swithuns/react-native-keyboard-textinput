@@ -1,7 +1,7 @@
 {
-  "name": "react-native-keyboard-textinput",
+  "name": "@swithuns/react-native-keyboard-textinput",
   "version": "1.0.0",
-  "description": "A react native package to provide a versatile and easy to implement solution to the overcomplicated problem of how to handle keyboards on different screens throughout a mobile app.",
+  "description": "A versatile, scalable, one-size-fits-all solution to the fiddly problem of handling keyboard interactions in react native. This also can be configured to act as a form modal that sticks to the keyboard.",
   "main": "index.tsx",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
