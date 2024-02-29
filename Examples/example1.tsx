@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
 
 const SimpleTextInput = () => {
   const [inputValue, setInputValue] = useState('');
+  const val = 'Keyboard Returned'
 
 
   return (
@@ -30,6 +31,7 @@ const SimpleTextInput = () => {
         placeholder="Type here..."
         value={inputValue}
         onChangeText={setInputValue}
+        onSubmitEditing={(e)=>setInputValue(val)}
       />
       <Text>You entered: {inputValue}</Text>
     </View>

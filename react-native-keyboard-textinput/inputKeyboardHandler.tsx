@@ -25,7 +25,6 @@ const InputKeyboardHandler: React.FC<InputKeyboardHandlerInterface> = ({
     inputId,
     keyboardId
   } = useTextInputStore();
-
   useEffect(()=> {
     if(inputProps.value != text){
       setText(inputProps.value);
@@ -67,6 +66,7 @@ const InputKeyboardHandler: React.FC<InputKeyboardHandlerInterface> = ({
   },
   value:text,
   onChangeText:(text)=> {setText(text); inputProps.onChangeText && inputProps.onChangeText(text)}
+  
  }
   if(keyboardId && keyboardId > 0 && customTextBoxes?.length && customTextBoxes.length > keyboardId -1){
    
@@ -80,15 +80,9 @@ const InputKeyboardHandler: React.FC<InputKeyboardHandlerInterface> = ({
  
   return (
     <TextInput
-      {...inputProps} 
+      {...adjustedInputProps} 
       ref={textInputRef}
       style={[styles.textInput, style, { bottom: keyboardHeight }]}
-      onBlur={(e) => {
-        setId("");
-        inputProps.onBlur && inputProps.onBlur(e)
-      }}
-      value={text}
-      onChangeText={(text)=> {setText(text); inputProps.onChangeText && inputProps.onChangeText(text)}}
     />
   );
 };

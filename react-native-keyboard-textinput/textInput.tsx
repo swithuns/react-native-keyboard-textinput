@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import useTextInputStore from "./textInputStore";
-import { StyleSheet, TextInput as NativeTextInput, View, TextInputProps, TextStyle } from "react-native";
+import { StyleSheet, TextInput as NativeTextInput, View, TextInputProps, TextStyle, NativeSyntheticEvent, TextInputSubmitEditingEventData } from "react-native";
 
 export interface KeyboardTextInput {
     keyboardId?: number,
@@ -15,8 +15,19 @@ export interface CustomKeyboardInputInterface extends TextInputProps{
 
 export const TextInput: React.FC<TextInputProps & KeyboardTextInput> = ({
     keyboardId,
+    onSubmitEditing,
     ...props
   }) => {
+    //handler for onSubmitEditing, simple trigger so that state objects not strictly needed by the keyboardinput don't need to be passed as globals
+    const [submit, setSubmit] = useState<NativeSyntheticEvent<TextInputSubmitEditingEventData> | false>(false);
+    useEffect(()=>{
+      if(submit){
+        onSubmitEditing && onSubmitEditing(submit);
+        setSubmit(false);
+      }
+    }, [submit])
+
+
     const [id] = useState(Math.random().toString(36).substring(7));
     const { setId, setInputProps, setKeyboardId, inputId } = useTextInputStore();
 
@@ -29,7 +40,8 @@ export const TextInput: React.FC<TextInputProps & KeyboardTextInput> = ({
     }, [])
   
     const setFocused = () => {
-      setInputProps(props)
+      const inputProps = {...props, onSubmitEditing:onSubmitEditing && setSubmit};
+      setInputProps(inputProps)
       keyboardId? setKeyboardId(keyboardId): setKeyboardId(0)
       setId(id);
     };
@@ -40,6 +52,7 @@ export const TextInput: React.FC<TextInputProps & KeyboardTextInput> = ({
             setFocused();
           }}
           {...props}
+          
           style={[styles.text, props.style]}
         />
     );
