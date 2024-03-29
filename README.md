@@ -41,9 +41,11 @@ import { TextInput } from "react-native-keyboard-textinput";
 <TextInput {...props} />;
 ```
 
-## Recent updates 1.0.1
+## Recent updates 1.0.2
 
 -Improved handler for onSubmitEditing to allow local state objects to be handled in the function without any complicated state handling.
+-Unrendering of textinput closes keyboard.
+-forwarding of ref to allow ref functions eg: ref.current?.focus()
 
 ## Future Plans
 
