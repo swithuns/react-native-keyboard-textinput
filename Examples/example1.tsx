@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useRef, useState } from 'react';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { TextInput } from 'react-native-keyboard-textinput';
 
 const styles = StyleSheet.create({
@@ -19,6 +19,10 @@ const styles = StyleSheet.create({
 });
 
 const SimpleTextInput = () => {
+  const ref = useRef(null);
+
+
+
   const [inputValue, setInputValue] = useState('');
   const val = 'Keyboard Returned'
 
@@ -26,13 +30,20 @@ const SimpleTextInput = () => {
   return (
     <View style={styles.container}>
       <Text>Enter your text:</Text>
+      
       <TextInput
+        ref={ref}
         style={styles.input}
         placeholder="Type here..."
         value={inputValue}
         onChangeText={setInputValue}
         onSubmitEditing={(e)=>setInputValue(val)}
       />
+      <Pressable onPress={() => ref.current?.focus()}>
+        <Text>
+          focus
+        </Text>
+      </Pressable>
       <Text>You entered: {inputValue}</Text>
     </View>
   );

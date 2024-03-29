@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import useTextInputStore from "./textInputStore";
 import { StyleSheet, TextInput as NativeTextInput, View, TextInputProps, TextStyle, NativeSyntheticEvent, TextInputSubmitEditingEventData } from "react-native";
 
@@ -6,6 +6,7 @@ export interface KeyboardTextInput {
     keyboardId?: number,
     customOnChange?: (input:any) => void,
     customData?: any
+    ref?: React.LegacyRef<NativeTextInput>
 }
 
 export interface CustomKeyboardInputInterface extends TextInputProps{
@@ -13,11 +14,11 @@ export interface CustomKeyboardInputInterface extends TextInputProps{
     customData?: any
 }
 
-export const TextInput: React.FC<TextInputProps & KeyboardTextInput> = ({
+export const TextInput: React.FC<TextInputProps & KeyboardTextInput> = React.forwardRef(({
     keyboardId,
     onSubmitEditing,
     ...props
-  }) => {
+  }, ref) => {
     //handler for onSubmitEditing, simple trigger so that state objects not strictly needed by the keyboardinput don't need to be passed as globals
     const [submit, setSubmit] = useState<NativeSyntheticEvent<TextInputSubmitEditingEventData> | false>(false);
     useEffect(()=>{
@@ -37,12 +38,13 @@ export const TextInput: React.FC<TextInputProps & KeyboardTextInput> = ({
                 setId('');
             }
         }
-    }, [])
+    }, [inputId])
   
     const setFocused = () => {
       const inputProps = {...props, onSubmitEditing:onSubmitEditing && setSubmit};
       setInputProps(inputProps)
-      keyboardId? setKeyboardId(keyboardId): setKeyboardId(0)
+      keyboardId? setKeyboardId(keyboardId): setKeyboardId(0);
+      console.log(id);
       setId(id);
     };
     
@@ -51,12 +53,14 @@ export const TextInput: React.FC<TextInputProps & KeyboardTextInput> = ({
           onFocus={() => {
             setFocused();
           }}
+          ref={ref}
           {...props}
+          
           
           style={[styles.text, props.style]}
         />
     );
-  };
+  });
 
   const styles = StyleSheet.create({
         text: {

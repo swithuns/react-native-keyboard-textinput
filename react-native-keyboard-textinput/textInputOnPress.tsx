@@ -1,13 +1,13 @@
 import { Keyboard, Pressable, TextInputProps, TextStyle, TextInput as TextInput  } from "react-native";
 import useTextInputStore from "./textInputStore";
 import { KeyboardTextInput } from "./textInput";
-import { useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 
 interface TextInputButtonInterface {
     onPressStyle?:TextStyle
 }
 
-const TextInputOnPress: React.FC<TextInputButtonInterface & TextInputProps & KeyboardTextInput> = ({onPressStyle, keyboardId, children, ...props}) => {
+const TextInputOnPress: React.FC<TextInputButtonInterface & TextInputProps & KeyboardTextInput> =  ({onPressStyle, keyboardId, children, ...props}, ref) => {
     const textInputRef = useRef<TextInput>(null);
 
     const handlePress = () => {
